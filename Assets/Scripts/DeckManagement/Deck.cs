@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 
 
 public class Deck : MonoBehaviour
@@ -15,6 +16,7 @@ public class Deck : MonoBehaviour
     [SerializeField] private GameObject _PlayingCardgroup;
 
     [SerializeField] private GameObject _DiscardCardgroup;
+    [SerializeField] private GameObject _PlayedHandgroup;
     public HorizontalCardHolder cardHolder;
 
 
@@ -23,6 +25,8 @@ public class Deck : MonoBehaviour
     private List<Card> _discardPile = new();
 
     public List<Card> HandCards { get; private set; } = new();
+
+    private int HandSize = 8;
 
 
     private void Awake()
@@ -42,6 +46,11 @@ public class Deck : MonoBehaviour
     {
         //we will instantiate the deck once, at the start of the game/level
         InstantiateDeck();
+        for (int i = 0; i < HandSize; i++)
+        {
+            DrawCard();
+        }
+
     }
 
     private void InstantiateDeck()
@@ -100,8 +109,22 @@ public class Deck : MonoBehaviour
             _discardPile.Add(card);
             card.gameObject.SetActive(false);
             card.transform.parent.transform.SetParent(_DiscardCardgroup.transform);
+            DrawCard();
         }
         cardHolder.selectedCards.Clear();
+    }
+
+    public void PlayHand()
+    {
+        foreach (Card card in cardHolder.selectedCards)
+        {
+            HandCards.Remove(card);
+            _discardPile.Add(card);
+            card.transform.parent.transform.SetParent(_PlayedHandgroup.transform);
+            DrawCard();
+        }
+        cardHolder.selectedCards.Clear();
+
     }
 
 }

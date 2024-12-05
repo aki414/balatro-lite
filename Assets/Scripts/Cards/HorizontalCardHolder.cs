@@ -31,6 +31,7 @@ public class HorizontalCardHolder : MonoBehaviour
 
         StartCoroutine(CheckForNewCards());
     }
+    // MOVE THIS TO DESK.CS
     IEnumerator CheckForNewCards()
     {
         while (true)
@@ -67,7 +68,6 @@ public class HorizontalCardHolder : MonoBehaviour
                     cards[i].BeginDragEvent.RemoveListener(BeginDrag);
                     cards[i].EndDragEvent.RemoveListener(EndDrag);
                     cards[i].PointerUpEvent.RemoveListener(PointerUp);
-                    cards[i].OnDestroy();
 
                     cards.RemoveAt(i);
 
