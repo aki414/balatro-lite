@@ -55,7 +55,6 @@ public class Deck : MonoBehaviour
 
     private void InstantiateDeck()
     {
-        ShuffleDeck();
         for (int i = 0; i < _playerDeck.CardsInCollection.Count; i++)
         {
             GameObject cardSlot = Instantiate(_cardSlotPrefab, transform); // Instantiate the CardSlot prefab as child of the Card Canvas
@@ -64,6 +63,8 @@ public class Deck : MonoBehaviour
             _deckPile.Add(card); //at the start, all cards are in the deck, none in hand, none in discard
             card.gameObject.SetActive(false);
         }
+        ShuffleDeck();
+
 
     }
 
@@ -80,15 +81,8 @@ public class Deck : MonoBehaviour
         }
     }
 
-    //puts amount cards in hand
     public void DrawCard()
     {
-        if (_deckPile.Count <= 0)
-        {
-            _discardPile = _deckPile;
-            _discardPile.Clear();
-            ShuffleDeck();
-        }
 
         if (_deckPile.Count > 0)
         {
@@ -96,6 +90,10 @@ public class Deck : MonoBehaviour
             _deckPile[0].gameObject.SetActive(true);
             _deckPile[0].transform.parent.transform.SetParent(_PlayingCardgroup.transform); // Set parent of CardSlot to _PlayingCardgroup
             _deckPile.RemoveAt(0);
+        }
+        else
+        {
+            Debug.Log("The deck is empty!");
         }
 
 
@@ -116,14 +114,19 @@ public class Deck : MonoBehaviour
 
     public void PlayHand()
     {
-        foreach (Card card in cardHolder.selectedCards)
+        if (cardHolder.selectedCards.Count > 5)
+            return;
+        else
         {
-            HandCards.Remove(card);
-            _discardPile.Add(card);
-            card.transform.parent.transform.SetParent(_PlayedHandgroup.transform);
-            DrawCard();
+            foreach (Card card in cardHolder.selectedCards)
+            {
+                HandCards.Remove(card);
+                _discardPile.Add(card);
+                card.transform.parent.transform.SetParent(_PlayedHandgroup.transform);
+                DrawCard();
+            }
+            cardHolder.selectedCards.Clear();
         }
-        cardHolder.selectedCards.Clear();
 
     }
 
