@@ -101,15 +101,20 @@ public class Deck : MonoBehaviour
 
     public void DiscardCard()
     {
-        foreach (Card card in cardHolder.selectedCards)
+        if (cardHolder.selectedCards.Count > 5)
+            return;
+        else
         {
-            HandCards.Remove(card);
-            _discardPile.Add(card);
-            card.gameObject.SetActive(false);
-            card.transform.parent.transform.SetParent(_DiscardCardgroup.transform);
-            DrawCard();
+            foreach (Card card in cardHolder.selectedCards)
+            {
+                HandCards.Remove(card);
+                _discardPile.Add(card);
+                card.gameObject.SetActive(false);
+                card.transform.parent.transform.SetParent(_DiscardCardgroup.transform);
+                DrawCard();
+            }
+            cardHolder.selectedCards.Clear();
         }
-        cardHolder.selectedCards.Clear();
     }
 
     public void PlayHand()
