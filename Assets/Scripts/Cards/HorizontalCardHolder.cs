@@ -31,7 +31,6 @@ public class HorizontalCardHolder : MonoBehaviour
 
         StartCoroutine(CheckForNewCards());
     }
-    // MOVE THIS TO DESK.CS
     IEnumerator CheckForNewCards()
     {
         while (true)

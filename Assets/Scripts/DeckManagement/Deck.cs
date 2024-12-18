@@ -109,8 +109,7 @@ public class Deck : MonoBehaviour
             {
                 HandCards.Remove(card);
                 _discardPile.Add(card);
-                card.gameObject.SetActive(false);
-                card.transform.parent.transform.SetParent(_DiscardCardgroup.transform);
+                card.OnDestroy();
                 DrawCard();
             }
             cardHolder.selectedCards.Clear();
@@ -127,7 +126,10 @@ public class Deck : MonoBehaviour
             {
                 HandCards.Remove(card);
                 _discardPile.Add(card);
+                //card.gameObject.SetActive(false);
+
                 card.transform.parent.transform.SetParent(_PlayedHandgroup.transform);
+
                 DrawCard();
             }
             cardHolder.selectedCards.Clear();

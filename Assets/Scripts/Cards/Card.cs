@@ -210,6 +210,7 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
     {
         if (cardVisual != null)
             Destroy(cardVisual.gameObject);
+        Destroy(transform.parent.gameObject);
     }
 }
 
