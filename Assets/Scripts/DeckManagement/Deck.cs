@@ -126,7 +126,7 @@ public class Deck : MonoBehaviour
             {
                 HandCards.Remove(card);
                 _discardPile.Add(card);
-                //card.gameObject.SetActive(false);
+                card.gameObject.SetActive(false);
 
                 card.transform.parent.transform.SetParent(_PlayedHandgroup.transform);
 
